@@ -32,7 +32,7 @@ public class Song {
     @OneToMany(mappedBy = "song", cascade = CascadeType.ALL)
 
     @JsonIgnore
-    private Set<SongSinger> songSingers;
+    private Set<SongAlbum> songAlbums;
 
     @OneToMany(mappedBy = "song", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -40,19 +40,19 @@ public class Song {
 
     @OneToOne(mappedBy = "song", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Song_Session songSession;
+    private Review review;
 
     public Song(){}
-    public Song(String name, String description, Double rating, Integer length, Song_Session songSession, ArrayList<SongSinger> songSingers, ArrayList<SongGenre> songGenres) {
+    public Song(String name, String description, Double rating, Integer length, Review review, ArrayList<SongAlbum> songAlbums, ArrayList<SongGenre> songGenres) {
         this.name = name;
         this.description = description;
         this.rating = rating;
         this.length = length;
 
-        this.songSession = songSession;
-        this.songSession.setSong(this);
-        for(SongSinger songSinger : songSingers) songSinger.setSong(this);
-        this.songSingers = new HashSet<SongSinger>(songSingers);
+        this.review = review;
+        this.review.setSong(this);
+        for(SongAlbum songAlbum : songAlbums) songAlbum.setSong(this);
+        this.songAlbums = new HashSet<SongAlbum>(songAlbums);
         for(SongGenre songGenre : songGenres) songGenre.setSong(this);
         this.songGenres = new HashSet<SongGenre>(songGenres);
     }

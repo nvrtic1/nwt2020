@@ -11,12 +11,12 @@ import java.util.Objects;
 @NoArgsConstructor
 
 @Entity
-public class SongSinger implements Serializable {
+public class SongAlbum implements Serializable {
 
     @Id
     @ManyToOne
     @JoinColumn
-    private Singer singer;
+    private Album album;
 
     @Id
     @ManyToOne
@@ -24,22 +24,22 @@ public class SongSinger implements Serializable {
 
     private Song song;
 
-    public SongSinger(Singer singer) {
-        this.singer = singer;
+    public SongAlbum(Album album) {
+        this.album = album;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SongSinger)) return false;
-        SongSinger that = (SongSinger) o;
+        if (!(o instanceof SongAlbum)) return false;
+        SongAlbum that = (SongAlbum) o;
         return Objects.equals(song.getName(), that.song.getName()) &&
-                Objects.equals(singer.getFirstname(), that.singer.getFirstname());
+                Objects.equals(album.getTitle(), that.album.getTitle());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(song.getName(), singer.getFirstname());
+        return Objects.hash(song.getName(), album.getTitle());
     }
 
     public void setSong(Song song) {

@@ -2,9 +2,9 @@ package com.nwt.microservice.service;
 
 import com.nwt.microservice.exception.ResourceNotFoundException;
 import com.nwt.microservice.model.Song;
-import com.nwt.microservice.repository.SingerRepository;
+import com.nwt.microservice.repository.AlbumRepository;
 import com.nwt.microservice.repository.SongRepository;
-import com.nwt.microservice.repository.Song_SessionRepository;
+import com.nwt.microservice.repository.ReviewRepository;
 import com.nwt.microservice.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,16 +15,16 @@ import java.util.Optional;
 @Service
 public class SongServiceImpl implements SongService {
     private SongRepository songRepository;
-    private SingerRepository singerRepository;
+    private AlbumRepository albumRepository;
     private GenreRepository genreRepository;
-    private Song_SessionRepository song_SessionRepository;
+    private ReviewRepository reviewRepository;
 
     @Autowired
-    public SongServiceImpl(SongRepository songRepository, SingerRepository singerRepository, GenreRepository genreRepository, Song_SessionRepository song_SessionRepository){
+    public SongServiceImpl(SongRepository songRepository, AlbumRepository albumRepository, GenreRepository genreRepository, ReviewRepository reviewRepository){
         this.songRepository = songRepository;
-        this.singerRepository = singerRepository;
+        this.albumRepository = albumRepository;
         this.genreRepository = genreRepository;
-        this.song_SessionRepository = song_SessionRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     @Override

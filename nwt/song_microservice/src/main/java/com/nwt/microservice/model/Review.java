@@ -3,11 +3,12 @@ package com.nwt.microservice.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 
 @Entity
-public class Song_Session {
+public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -17,7 +18,11 @@ public class Song_Session {
     //@MapsId
     private Song song;
 
-    public Song_Session() {}
+    private String comment;
+    private Integer rating;
+    private Date dateComment;
+
+    public Review() {}
 
     public Song getSong() {
         return song;
