@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -72,5 +73,93 @@ public class MicroserviceApplicationTests {
 		when(repository.findAll()).thenReturn(Stream
 				.of(new Song("Sankeru", "neki opis", 5.0, 123, new Review(), bp1, bg1), new Song("Snovi od stakla", "neki opis pjesme", 4.8, 136 ,new Review(), bp2, bg1)).collect(Collectors.toList()));
 		assertEquals(2, service.getAllSongs().size());
+	}
+
+	@Test
+	public void getSongIDTest() {
+		// Create a couple of Film, Actor and FilmActor
+		Album albumA = new Album("Miljacka", "Halidov novi album", new Date(95, 3, 11, 0, 0));
+		albumRepository.saveAll(Arrays.asList(albumA));
+
+		Genre genreA = new Genre("Narodna");
+		genreRepository.saveAll(Arrays.asList(genreA));
+
+		ArrayList<SongAlbum> bp1 = new ArrayList<>();
+
+		bp1.add(new SongAlbum(albumA));
+
+		ArrayList<SongGenre> bg1 = new ArrayList<>();
+		bg1.add(new SongGenre(genreA, new Date()));
+
+		when(repository.findAll()).thenReturn(Stream
+				.of(new Song("Sankeru", "neki opis", 5.0, 123, new Review(), bp1, bg1)).collect(Collectors.toList()));
+		assertNotNull(service.getSong(1));
+	}
+
+	@Test
+	public void postSongTest() {
+		// Create a couple of Film, Actor and FilmActor
+		Album albumA = new Album("Miljacka", "Halidov novi album", new Date(95, 3, 11, 0, 0));
+		albumRepository.saveAll(Arrays.asList(albumA));
+
+		Genre genreA = new Genre("Narodna");
+		genreRepository.saveAll(Arrays.asList(genreA));
+
+		ArrayList<SongAlbum> bp1 = new ArrayList<>();
+
+		bp1.add(new SongAlbum(albumA));
+
+		ArrayList<SongGenre> bg1 = new ArrayList<>();
+		bg1.add(new SongGenre(genreA, new Date()));
+
+		when(repository.findAll()).thenReturn(Stream
+				.of(new Song("Sankeru", "neki opis", 5.0, 123, new Review(), bp1, bg1)).collect(Collectors.toList()));
+		assertNotNull(service.getSong(1));
+	}
+
+	@Test
+	public void deleteAllSongTest() {
+		// Create a couple of Film, Actor and FilmActor
+		Album albumA = new Album("Miljacka", "Halidov novi album", new Date(95, 3, 11, 0, 0));
+		albumRepository.saveAll(Arrays.asList(albumA));
+
+		Genre genreA = new Genre("Narodna");
+		genreRepository.saveAll(Arrays.asList(genreA));
+
+		ArrayList<SongAlbum> bp1 = new ArrayList<>();
+
+		bp1.add(new SongAlbum(albumA));
+
+		ArrayList<SongGenre> bg1 = new ArrayList<>();
+		bg1.add(new SongGenre(genreA, new Date()));
+
+		when(repository.findAll()).thenReturn(Stream
+				.of(new Song("Sankeru", "neki opis", 5.0, 123, new Review(), bp1, bg1)).collect(Collectors.toList()));
+
+		repository.deleteAll();
+		assertNotNull(service.getAllSongs());
+	}
+
+	@Test
+	public void deleteSongTest() {
+		// Create a couple of Film, Actor and FilmActor
+		Album albumA = new Album("Miljacka", "Halidov novi album", new Date(95, 3, 11, 0, 0));
+		albumRepository.saveAll(Arrays.asList(albumA));
+
+		Genre genreA = new Genre("Narodna");
+		genreRepository.saveAll(Arrays.asList(genreA));
+
+		ArrayList<SongAlbum> bp1 = new ArrayList<>();
+
+		bp1.add(new SongAlbum(albumA));
+
+		ArrayList<SongGenre> bg1 = new ArrayList<>();
+		bg1.add(new SongGenre(genreA, new Date()));
+
+		when(repository.findAll()).thenReturn(Stream
+				.of(new Song("Sankeru", "neki opis", 5.0, 123, new Review(), bp1, bg1)).collect(Collectors.toList()));
+
+		repository.deleteById(1);
+		assertNotNull(service.getSong(1));
 	}
 }

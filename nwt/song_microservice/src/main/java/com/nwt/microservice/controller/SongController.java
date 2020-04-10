@@ -41,15 +41,16 @@ public class SongController {
 
     @DeleteMapping("/songs/")
     public ResponseEntity<?> deleteAllSongs() {
-        songRepository.deleteAll();
+        songService.deleteAllSongs();
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/songs/{songid}")
-    public ResponseEntity<?> deleteSong(@PathVariable Integer songId) {
-        return songRepository.findById(songId).map(song -> {
-            songRepository.delete(song);
+    @DeleteMapping("/songs/{id}")
+    public ResponseEntity<?> deleteSong(@PathVariable Integer id) {
+        return songService.findById(id).map(song -> {
+            songService.deleteSongById(song);
             return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("Pjesma sa ID-jem " + songId + " nije pronađena"));
+        }).orElseThrow(() -> new ResourceNotFoundException("Pjesma sa ID-jem " + id + " nije pronađena"));
     }
+
 }

@@ -1,5 +1,6 @@
 package com.nwt.microservice.service;
 
+import com.netflix.discovery.converters.Auto;
 import com.nwt.microservice.exception.ResourceNotFoundException;
 import com.nwt.microservice.model.Song;
 import com.nwt.microservice.repository.AlbumRepository;
@@ -54,4 +55,22 @@ public class SongServiceImpl implements SongService {
     public Optional<Song> findById(Integer id){
         return songRepository.findById(id);
     }
+
+    @Override
+    public Boolean deleteAllSongs()
+    {
+        songRepository.deleteAll();
+        return true;
+    }
+
+
+    @Override
+    public Song deleteSongById(Song id)
+    {
+        return songRepository.findById(id.getID()).map(song -> {
+            songRepository.delete(song);
+            return song;
+        }).orElseThrow(() -> new ResourceNotFoundException("Pjesma sa ID-jem " + id + " nije pronađena"));
+    }
+
 }

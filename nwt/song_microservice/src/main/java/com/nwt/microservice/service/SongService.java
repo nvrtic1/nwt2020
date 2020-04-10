@@ -12,4 +12,7 @@ public interface SongService {
     public Optional<Song> getSong(Integer id);
     public Song changeSong(Integer id, String name, String description, Double rating, Integer length);
     public Optional<Song> findById(Integer id);
+    public Boolean deleteAllSongs();
+    public Song deleteSongById(Song id);
+
 }
