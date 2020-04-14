@@ -33,7 +33,7 @@ public class SinhronaSingerController {
 
 
     @RequestMapping("/singers")
-    public List<Object> findAllHalls() {
+    public List<Object> findAllSingers() {
         Application application = eurekaClient.getApplication(singerServiceServiceAll);
         InstanceInfo instanceInfo = application.getInstances().get(0);
         System.out.println(instanceInfo);
@@ -51,5 +51,26 @@ public class SinhronaSingerController {
             return null;
         }
     }
+
+    @RequestMapping("/singers/{id}")
+    public Object findSingerByID(@PathVariable Integer id) {
+        Application application = eurekaClient.getApplication(singerServiceServiceAll);
+        InstanceInfo instanceInfo = application.getInstances().get(0);
+        System.out.println(instanceInfo);
+        String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/" + "singers/" + id;
+        System.out.println("URL: " + url);
+
+        try {
+            Object result = restTemplate.getForObject(url, Object.class);
+            return result;
+        }
+        catch (Exception e)
+        {
+            if(1==1) throw  new ResourceNotFoundException("Provjerite da li je upaljen drugi mikroservis!");
+            System.out.println("Greska");
+            return null;
+        }
+    }
+
 
 }

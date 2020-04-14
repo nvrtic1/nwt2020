@@ -3,6 +3,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,17 +22,24 @@ public class Song {
 
 
     @Column(name = "name")
+    @NotNull
+    @Size(min = 1, max = 30, message
+            = "Ime pjesme moze imati minimalno 1 karaktera, a maksimalno 30")
     private String name;
 
     @Column(name = "description")
+    @Size(max = 500, message
+            = "Opis pjesme moze imati maksimalno 500 karaktera")
     private String description;
 
     @Column(name = "rating")
+    @Min(value = 1, message = "Ocjena mora biti veca ili jednaka od 1")
+    @Max(value = 5, message = "Ocjena mora biti manja ili jednaka od 5")
     private Double rating;
 
     @Column(name = "length")
+    @Min(value = 1, message = "Dužina pjesme mora biti veca ili jednaka od 1")
     private Integer length;
-//moyda yato sto je ondje double ne trebaju navodnici
     @OneToMany(mappedBy = "song", cascade = CascadeType.ALL)
 
     @JsonIgnore
