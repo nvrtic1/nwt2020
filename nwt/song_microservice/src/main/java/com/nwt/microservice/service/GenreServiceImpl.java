@@ -44,6 +44,7 @@ public class GenreServiceImpl implements GenreService {
     public Genre changeGenre(Integer id, String name){
         return genreRepository.findById(id).map(genre -> {
             genre.setName(name);
+            genreRepository.save(genre);
             return genre;
         }).orElseThrow(() -> new ResourceNotFoundException("Žanr sa ID-jem: " + id + " nije pronadjen"));
     }

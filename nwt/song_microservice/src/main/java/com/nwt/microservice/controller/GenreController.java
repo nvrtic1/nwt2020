@@ -35,7 +35,7 @@ public class GenreController {
 
     @GetMapping("/genre/{id}")
     public Optional<Genre> getGenreById(@PathVariable Integer id){
-        if(genreService.findById(id)==null)
+        if(genreService.findById(id).isEmpty())
             throw  new ResourceNotFoundException("Nije pronadjen žanr sa ID-jem: "+id);
         return genreService.getGenre(id);
     }

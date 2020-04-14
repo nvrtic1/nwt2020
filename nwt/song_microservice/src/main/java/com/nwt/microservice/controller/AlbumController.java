@@ -35,7 +35,7 @@ public class AlbumController {
 
     @GetMapping("/albums/{id}")
     public Optional<Album> getAlbumById(@PathVariable Integer id){
-        if(albumRepository.findById(id)==null)
+        if(albumRepository.findById(id).isEmpty())
             throw  new ResourceNotFoundException("Nije pronadjen album sa ID-jem: "+id);
         return albumService.getAlbum(id);
     }

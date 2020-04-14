@@ -29,7 +29,7 @@ public class SongController {
 
     @GetMapping("/songs/{id}")
     public Optional<Song> getSongById(@PathVariable Integer id){
-        if(songRepository.findById(id)==null)
+        if(songRepository.findById(id).isEmpty())
             throw  new ResourceNotFoundException("Nije pronadjena pjesma sa ID-jem: "+id);
         return songService.getSong(id);
     }
