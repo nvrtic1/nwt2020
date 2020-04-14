@@ -36,7 +36,7 @@ public class SongController {
 
     @PostMapping("/songs")
     public Song newSong(@Valid @RequestBody Song song) {
-        return songRepository.save(song);
+        return songService.addSong(song);
     }
 
     @DeleteMapping("/songs/")
@@ -51,6 +51,11 @@ public class SongController {
             songService.deleteSongById(song);
             return ResponseEntity.ok().build();
         }).orElseThrow(() -> new ResourceNotFoundException("Pjesma sa ID-jem " + id + " nije pronađena"));
+    }
+
+    @PutMapping("/songs/{songId}")
+    public Song updateSong(@PathVariable Integer songId, @Valid @RequestBody Song newSong) {
+        return songService.changeSong(songId, newSong.getName(), newSong.getDescription(), newSong.getRating(), newSong.getLength());
     }
 
 }

@@ -47,6 +47,7 @@ public class SongServiceImpl implements SongService {
             song.setDescription(description);
             song.setRating(rating);
             song.setLength(length);
+            songRepository.save(song);
             return song;
         }).orElseThrow(() -> new ResourceNotFoundException("Pjesma sa ID-jem: " + id + " nije pronadjena"));
     }
@@ -71,6 +72,13 @@ public class SongServiceImpl implements SongService {
             songRepository.delete(song);
             return song;
         }).orElseThrow(() -> new ResourceNotFoundException("Pjesma sa ID-jem " + id + " nije pronađena"));
+    }
+
+    @Override
+    public Song addSong(Song song)
+    {
+        songRepository.save(song);
+        return song;
     }
 
 }

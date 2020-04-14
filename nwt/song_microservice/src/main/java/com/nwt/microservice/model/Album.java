@@ -1,5 +1,6 @@
 package com.nwt.microservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -33,6 +34,8 @@ public class Album {
 
 
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
+    @JsonIgnore
+
     private Set<SongAlbum> songAlbums = new HashSet<>();
 
     public Album(){}
@@ -50,4 +53,22 @@ public class Album {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getDateRelease() {
+        return dateRelease;
+    }
+
+    public void setDateRelease(Date dateRelease) {
+        this.dateRelease = dateRelease;
+    }
+
+    public Integer getId() {return id;}
 }

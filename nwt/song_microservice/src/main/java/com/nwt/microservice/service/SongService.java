@@ -14,5 +14,7 @@ public interface SongService {
     public Optional<Song> findById(Integer id);
     public Boolean deleteAllSongs();
     public Song deleteSongById(Song id);
+    public Song addSong(Song song);
+
 
 }

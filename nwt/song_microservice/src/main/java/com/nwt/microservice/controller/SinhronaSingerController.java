@@ -7,6 +7,8 @@ import com.netflix.discovery.shared.Application;
 import com.nwt.microservice.exception.ResourceNotFoundException;
 import com.nwt.microservice.model.Song;
 import com.nwt.microservice.repository.SongRepository;
+import com.nwt.microservice.service.GenreServiceImpl;
+import com.nwt.microservice.service.SinhronaServiceImpl;
 import com.nwt.microservice.service.SongServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,45 +33,22 @@ public class SinhronaSingerController {
     @Value("${service.singerService.serviceAll}")
     private String singerServiceServiceAll;
 
+    @Autowired
+    private SinhronaServiceImpl sinhronaService;
+
 
     @RequestMapping("/singers")
     public List<Object> findAllSingers() {
-        Application application = eurekaClient.getApplication(singerServiceServiceAll);
-        InstanceInfo instanceInfo = application.getInstances().get(0);
-        System.out.println(instanceInfo);
-        String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/" + "singers";
-        System.out.println("URL" + url);
-
-        try {
-            List<Object> result = restTemplate.getForObject(url, List.class);
-            return result;
-        }
-        catch (Exception e)
-        {
-            if(1==1) throw  new ResourceNotFoundException("Provjerite da li je upaljen drugi mikroservis!");
-            System.out.println("Greska");
-            return null;
-        }
+        if(sinhronaService.findAllSingers().size() == 0)
+            throw  new ResourceNotFoundException("Nije pronadjen ni jedan pjevač!");
+        return sinhronaService.findAllSingers();
     }
 
     @RequestMapping("/singers/{id}")
     public Object findSingerByID(@PathVariable Integer id) {
-        Application application = eurekaClient.getApplication(singerServiceServiceAll);
-        InstanceInfo instanceInfo = application.getInstances().get(0);
-        System.out.println(instanceInfo);
-        String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/" + "singers/" + id;
-        System.out.println("URL: " + url);
-
-        try {
-            Object result = restTemplate.getForObject(url, Object.class);
-            return result;
-        }
-        catch (Exception e)
-        {
-            if(1==1) throw  new ResourceNotFoundException("Provjerite da li je upaljen drugi mikroservis!");
-            System.out.println("Greska");
-            return null;
-        }
+        if(sinhronaService.findSingerByID(id)==null)
+            throw  new ResourceNotFoundException("Nije pronadjen pjevač sa ID-jem: "+id);
+        return sinhronaService.findSingerByID(id);
     }
 
 
