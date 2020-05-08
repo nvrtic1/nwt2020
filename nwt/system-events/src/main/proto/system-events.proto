@@ -1,0 +1,32 @@
+/*
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+//option java_multiple_files = true;
+option java_package = "com.example.systemevents";
+
+service SystemEvents {
+    rpc start(Request) returns (Response) {};
+}
+
+message Request {
+    google.protobuf.Timestamp timestamp = 1;
+    string nazivMikroservisa = 2;
+    enum tipAkcije{
+        GET = 0;
+        UPDATE = 1;
+        CREATE = 2;
+        DELETE = 3;
+    }
+    tipAkcije tip = 4;
+    string nazivResursa = 5;
+}
+
+message Response {
+    enum tipOdgovoraNaAkciju{
+        SUCCESS = 0;
+        ERROR = 1;
+    }
+    string odgovorNaAkciju = 1;
+    tipOdgovoraNaAkciju tip = 2;
+}
+*/
