@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.sql.Blob;
+
 /**
  * Config JWT.
  * Only one property 'shuaicj.security.jwt.secret' is mandatory.
@@ -31,5 +33,23 @@ public class JwtAuthenticationConfig {
 
     public String getUrl() {
         return url;
+    }
+
+    public void setUrl(String url) {this.url=url;}
+
+    public int getExpiration() {
+        return expiration;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public String getSecret() {
+        return secret;
     }
 }

@@ -13,7 +13,6 @@ import shuaicj.example.security.common.JwtAuthenticationConfig;
 import shuaicj.example.security.common.JwtTokenAuthenticationFilter;
 import shuaicj.example.security.common.JwtUsernamePasswordAuthenticationFilter;
 
-
 /**
  * Config role-based auth.
  *

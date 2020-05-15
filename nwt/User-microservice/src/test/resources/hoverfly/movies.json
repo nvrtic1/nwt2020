@@ -1,0 +1,55 @@
+{
+  "data" : {
+    "pairs" : [ {
+      "request" : {
+        "path" : [ {
+          "matcher" : "exact",
+          "value" : "/films"
+        } ],
+        "method" : [ {
+          "matcher" : "exact",
+          "value" : "GET"
+        } ],
+        "destination" : [ {
+          "matcher" : "exact",
+          "value" : "localhost:8082"
+        } ],
+        "scheme" : [ {
+          "matcher" : "exact",
+          "value" : "http"
+        } ],
+        "query" : { },
+        "body" : [ {
+          "matcher" : "exact",
+          "value" : ""
+        } ]
+      },
+      "response" : {
+        "status" : 200,
+        "body" : "[{\"id\":1,\"name\":\"Gori vatra\",\"description\":\"neki opis\",\"rating\":5.0,\"length\":123},{\"id\":2,\"name\":\"Nebo iznad krajolika\",\"description\":\"neki opis filma\",\"rating\":4.8,\"length\":136},{\"id\":3,\"name\":\"Gori vatra\",\"description\":\"neki opis\",\"rating\":5.0,\"length\":123},{\"id\":4,\"name\":\"Nebo iznad krajolika\",\"description\":\"neki opis filma\",\"rating\":4.8,\"length\":136},{\"id\":5,\"name\":\"Gori vatra\",\"description\":\"neki opis\",\"rating\":5.0,\"length\":123},{\"id\":6,\"name\":\"Nebo iznad krajolika\",\"description\":\"neki opis filma\",\"rating\":4.8,\"length\":136}]",
+        "encodedBody" : false,
+        "templated" : false,
+        "headers" : {
+          "Cache-Control" : [ "no-cache, no-store, max-age=0, must-revalidate" ],
+          "Content-Length" : [ "535" ],
+          "Content-Type" : [ "application/json;charset=UTF-8" ],
+          "Date" : [ "Wed, 17 Apr 2019 20:01:58 GMT" ],
+          "Expires" : [ "0" ],
+          "Hoverfly" : [ "Was-Here" ],
+          "Pragma" : [ "no-cache" ],
+          "X-Content-Type-Options" : [ "nosniff" ],
+          "X-Frame-Options" : [ "DENY" ],
+          "X-Xss-Protection" : [ "1; mode=block" ]
+        }
+      }
+    } ],
+    "globalActions" : {
+      "delays" : [ ]
+    }
+  },
+  "meta" : {
+    "schemaVersion" : "v5",
+    "hoverflyVersion" : "v1.0.0-rc.2",
+    "timeExported" : "2019-04-17T22:01:58+02:00"
+  }
+}

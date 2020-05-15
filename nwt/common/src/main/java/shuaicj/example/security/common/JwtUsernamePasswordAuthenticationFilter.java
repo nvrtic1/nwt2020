@@ -42,7 +42,8 @@ public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticat
 
     public JwtUsernamePasswordAuthenticationFilter(JwtAuthenticationConfig config, AuthenticationManager authManager) {
         super(new AntPathRequestMatcher(config.getUrl(), "POST"));
-        System.out.println("TEST ");
+        System.out.println("TEST 1");
+
         setAuthenticationManager(authManager);
         this.config = config;
         this.mapper = new ObjectMapper();
@@ -51,8 +52,11 @@ public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticat
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse rsp)
             throws AuthenticationException, IOException {
-    	System.out.println("TEST 233");
+    	System.out.println("TEST 2");
         User u = mapper.readValue(req.getInputStream(), User.class);
+        System.out.println(rsp.getStatus());
+        System.out.println(config.getHeader());
+        System.out.println(config.toString());
         return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(
                 u.getUsername(), u.getPassword(), Collections.emptyList()
         ));
@@ -61,7 +65,7 @@ public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticat
     @Override
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse rsp, FilterChain chain,
                                             Authentication auth) {
-    	System.out.println("TEST3 ");
+    	System.out.println("TEST 3");
         Instant now = Instant.now();
         String token = Jwts.builder()
                 .setSubject(auth.getName())
@@ -69,13 +73,17 @@ public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticat
                         .map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(now.plusSeconds(config.getExpiration())))
+
                 .signWith(SignatureAlgorithm.HS256, config.getSecret().getBytes())
                 .compact();
         rsp.addHeader(config.getHeader(), config.getPrefix() + " " + token);
-        System.out.println("TEST 4 " + rsp.getHeader("Authorization"));
+        System.out.println("TEST 4");
+        System.out.println(rsp.getHeader("Authorization"));
         System.out.println(rsp.getStatus());
 
         System.out.println(config.getHeader());
+
+        System.out.println(config.toString());
 
 
 
@@ -100,11 +108,24 @@ public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticat
             }
         });
 
+
+        System.out.println("zadnji: " + config.toString());
+
+
     }
 
     @Getter
     @Setter
     private static class User {
         private String username, password;
+
+        public String getUsername() {
+            return username;
+        }
+
+
+        public String getPassword() {
+            return password;
+        }
     }
 }

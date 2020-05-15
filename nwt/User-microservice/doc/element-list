@@ -1,0 +1,10 @@
+net.javaguides.springboot.springsecurity
+net.springboot.user_micro_service
+net.springboot.user_micro_service.config
+net.springboot.user_micro_service.constraint
+net.springboot.user_micro_service.model
+net.springboot.user_micro_service.repository
+net.springboot.user_micro_service.service
+net.springboot.user_micro_service.web
+net.springboot.user_micro_service.web.dto
+net.springboot.user_microservice.component
