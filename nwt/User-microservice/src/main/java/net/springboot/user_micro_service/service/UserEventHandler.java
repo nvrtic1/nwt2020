@@ -28,18 +28,27 @@ import org.springframework.stereotype.Component;
 public class UserEventHandler {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private RabbitTemplate rabbitTemplate;
+
     private Queue userCreatedQueue;
+    private Queue userDeleteQueue;
+
 
     @Autowired
-    public UserEventHandler(RabbitTemplate rabbitTemplate, Queue userCreatedQueue){
+    public UserEventHandler(RabbitTemplate rabbitTemplate, Queue userCreatedQueue, Queue userDeleteQueue){
         this.rabbitTemplate = rabbitTemplate;
+
         this.userCreatedQueue = userCreatedQueue;
+        this.userDeleteQueue = userDeleteQueue;
     }
 
     @HandleAfterCreate
     public void handleAfterCreated(User user) {
-
         rabbitTemplate.convertAndSend(userCreatedQueue.getName(), serializeToJson(user));
+    }
+
+    @HandleAfterDelete
+    public void handleAfterDelete(User user) {
+        rabbitTemplate.convertAndSend("user_delete_queue", serializeToJson(user));
     }
 
     private String serializeToJson(User user) {

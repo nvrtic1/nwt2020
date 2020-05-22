@@ -14,4 +14,9 @@ public class RabbitConfiguration {
     public Queue userCreatedQueue() {
         return new Queue("user_created_queue");
     }
+
+    @Bean
+    public Queue userDeleteQueue() {
+        return new Queue("user_delete_queue");
+    }
 }

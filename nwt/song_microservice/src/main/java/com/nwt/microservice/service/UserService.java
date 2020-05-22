@@ -21,7 +21,7 @@ public class UserService {
 
     @RabbitListener(queues = "#{userCreatedQueue.name}")
     public void getCreateUserMessage(String userCreatedMessage) {
-        logger.info("++++++++++++++++++++++++++ {}", userCreatedMessage);
+        logger.info("++++++++++++++++++++++++++1 {}", userCreatedMessage);
         ObjectMapper objectMapper = new ObjectMapper();
         User user = null;
         try {
@@ -32,6 +32,22 @@ public class UserService {
         }
         userRepository.save(user);
         logger.debug("User {} saved to DB", user.toString());
+    }
+
+    @RabbitListener(queues = "#{userDeleteQueue.name}")
+    public void getDeleteUserMessage(String userDeleteMessage) {
+        logger.info("++++++++++++++++++++++++++2 {}", userDeleteMessage);
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = null;
+        try {
+            objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+            user = objectMapper.readValue(userDeleteMessage, User.class);
+        } catch (IOException e) {
+            logger.info(String.valueOf(e.getMessage()));
+        }
+        System.out.println(user.toString());
+        userRepository.delete(user);
+        logger.debug("User {} deleted from DB", user.toString());
     }
 
 }

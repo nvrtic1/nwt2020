@@ -47,6 +47,9 @@ public class MainController {
     
     private String songService="song_microservice";
 
+    @Autowired
+    UserEventHandler userEventHandler;
+
 
     @GetMapping("/")
     public RedirectView redirect() {
@@ -106,6 +109,9 @@ public class MainController {
     public User deleteUser(@RequestParam (name="userEmail") String email, Model model) {
     	User user = userService.findByEmail(email);
         userService.deleteByEmail(email);
+
+        userEventHandler.handleAfterDelete(user);
+
         return user;
     }
     

@@ -10,4 +10,6 @@ public class RabbitConfiguration {
     Queue queue() {
         return new Queue("user_created_queue");
     }
+
+    Queue queue2 () {return new Queue("user_delete_queue");}
 }
