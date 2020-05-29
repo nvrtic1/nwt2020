@@ -36,7 +36,7 @@ class Registration extends Component {
 
   onSubmit(event){
     event.preventDefault();
-    fetch('http://localhost:8082/registration', {
+    fetch('http://localhost:8083/registration', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -86,35 +86,33 @@ class Registration extends Component {
           </nav>
           <hr />
           <h2>Registration</h2>
-          <form onSubmit={this.handleSubmit}>
           <br></br>
         <br></br>
-            <div class="main">
-         <div class="col-md-6 col-sm-12">
-            <div class="login-form">
-               <form>
-                  <div class="form-group">
+            <div className="main">
+         <div className="col-md-6 col-sm-12">
+            <div className="login-form">
+            <form onSubmit={this.handleSubmit}>
+                  <div className="form-group">
                      <label>Firstname</label>
-                     <input type="text" name="firstname" class="form-control" placeholder="Firstname" value={this.state.firstname} onChange={this.handleChangeFirstName}/>
+                     <input type="text" name="firstname" className="form-control" placeholder="Firstname" value={this.state.firstname} onChange={this.handleChangeFirstName}/>
                   </div>
-                  <div class="form-group">
+                  <div className="form-group">
                      <label>Lastname</label>
-                     <input type="text" name="lastname" class="form-control" placeholder="Lastname" value={this.state.lastname} onChange={this.handleChangeLastName}/>
+                     <input type="text" name="lastname" className="form-control" placeholder="Lastname" value={this.state.lastname} onChange={this.handleChangeLastName}/>
                   </div>
-                  <div class="form-group">
+                  <div className="form-group">
                      <label>Email</label>
-                     <input type="text" name="email" class="form-control" placeholder="Email" value={this.state.email} onChange={this.handleChangeEmail}/>
+                     <input type="text" name="email" className="form-control" placeholder="Email" value={this.state.email} onChange={this.handleChangeEmail}/>
                   </div>
-                  <div class="form-group">
+                  <div className="form-group">
                      <label>Password</label>
-                     <input type="password" name="password" class="form-control" placeholder="Password" value={this.state.password} onChange={this.handleChangePassword}/>
+                     <input type="password" name="password" className="form-control" placeholder="Password" value={this.state.password} onChange={this.handleChangePassword}/>
                   </div>
-                  <button type="submit" class="btn btn-primary">Registation</button>
+                  <button type="submit" className="btn btn-primary">Registation</button>
                </form>
             </div>
          </div>
       </div>
-          </form>
         </div>
     );
   }

@@ -53,14 +53,13 @@ class Admin extends Component {
 
   render() {
 
-    const { redirect } = this.state;
-    const { pom } = this.state;
+    console.log(localStorage.username);
 
-     if (redirect) {
-       if(pom==='admin'){
-       return <Redirect to='/admin' />;}
-       else
-       return <Redirect to='/user' />;
+
+
+     if (localStorage.username==="undefined") {
+      alert("Nemate pristup ovoj stranici");
+       return <Redirect to='/' />;
 
      }
 
@@ -72,7 +71,10 @@ class Admin extends Component {
                     <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <ul className="navbar-nav mr-auto">
           <li><a href='/admin' className="nav-link"> Home </a></li>
-            <li><a href='/login' className="nav-link">Sign Out</a></li>
+          <li><a href='/users' className="nav-link">Users</a></li>
+            <li><a href='/addSinger' className="nav-link">Singers</a></li>
+            <li><a href='/addSong' className="nav-link">Songs</a></li>
+            <li><a href='/signOut' className="nav-link">Sign Out</a></li>
           </ul>
           </nav>
           <hr />

@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -28,6 +29,7 @@ import shuaicj.example.security.common.JwtTokenAuthenticationFilter;
 import shuaicj.example.security.common.JwtUsernamePasswordAuthenticationFilter;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpMethod.POST;
 
@@ -76,6 +78,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //    }
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+        System.out.println("-2-2-2-2-2-");
+
         httpSecurity
                 .cors().and()
                 .csrf().disable()
@@ -105,6 +109,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+        System.out.println("-3-3-3-3-3-");
+
         final CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH"));

@@ -23,6 +23,7 @@ public class SingerControler {
     @Autowired
     private SingerService singerService;
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/singers")
     public List<Singer> getAllSingers(){
         List<Singer> singers = singerRepository.findAll();
@@ -31,6 +32,8 @@ public class SingerControler {
         }
         return singers;
     }
+
+    @CrossOrigin(origins = "*")
     @GetMapping("/singers/{id}")
     public Optional<Singer> getSingerById(@PathVariable Integer id){
         if(singerRepository.findById(id).isEmpty())
@@ -38,17 +41,20 @@ public class SingerControler {
         return singerService.getSinger(id);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/singers")
     public Singer newSinger(@Valid @RequestBody Singer singer) {
         return singerRepository.save(singer);
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/singers/")
     public ResponseEntity<?> deleteAllSingers() {
         singerRepository.deleteAll();
         return ResponseEntity.ok().build();
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/singers/{singerId}")
     public ResponseEntity<?> deleteSinger(@PathVariable("singerId") Integer singerId) {
         return singerRepository.findById(singerId).map(singer -> {

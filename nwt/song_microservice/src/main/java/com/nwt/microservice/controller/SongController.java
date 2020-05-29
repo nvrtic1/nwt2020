@@ -20,6 +20,7 @@ public class SongController {
     @Autowired
     private SongServiceImpl songService;
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/songs")
     public List<Song> getListAllSongs() {
         if(songRepository.findAll().size() == 0)
@@ -27,6 +28,7 @@ public class SongController {
         return songService.getAllSongs();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/songs/{id}")
     public Optional<Song> getSongById(@PathVariable Integer id){
         if(songRepository.findById(id).isEmpty())
@@ -34,17 +36,20 @@ public class SongController {
         return songService.getSong(id);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/songs")
     public Song newSong(@Valid @RequestBody Song song) {
         return songService.addSong(song);
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/songs/")
     public ResponseEntity<?> deleteAllSongs() {
         songService.deleteAllSongs();
         return ResponseEntity.ok().build();
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/songs/{id}")
     public ResponseEntity<?> deleteSong(@PathVariable Integer id) {
         return songService.findById(id).map(song -> {
@@ -53,6 +58,7 @@ public class SongController {
         }).orElseThrow(() -> new ResourceNotFoundException("Pjesma sa ID-jem " + id + " nije pronađena"));
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/songs/{songId}")
     public Song updateSong(@PathVariable Integer songId, @Valid @RequestBody Song newSong) {
         return songService.changeSong(songId, newSong.getName(), newSong.getDescription(), newSong.getRating(), newSong.getLength());

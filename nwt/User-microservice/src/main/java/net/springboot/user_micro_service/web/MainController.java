@@ -12,15 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -60,6 +52,7 @@ public class MainController {
 	 * @param empty
 	 * @return login page
 	 */
+
     @PostMapping
     @GetMapping("/login")
     public String login() {
@@ -106,9 +99,9 @@ public class MainController {
      */
     @ResponseBody
     @RequestMapping(value = "/delete/users", method = RequestMethod.DELETE)
-    public User deleteUser(@RequestParam (name="userEmail") String email, Model model) {
-    	User user = userService.findByEmail(email);
-        userService.deleteByEmail(email);
+    public User deleteUser(@RequestParam (name="id") Long id, Model model) {
+    	User user = userService.findById(id);
+        userService.deleteByEmail(user.getEmail());
 
         userEventHandler.handleAfterDelete(user);
 
@@ -178,6 +171,8 @@ public class MainController {
         model.addAttribute("users", userService.findAll());
         return "adminUsers";
     }
+
+
     
     /**
      * Get all users without any authentication in json format

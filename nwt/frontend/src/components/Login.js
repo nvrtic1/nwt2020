@@ -31,7 +31,7 @@ class Login extends Component {
 
   onSubmit(event){
      event.preventDefault();
-    fetch('http://localhost:8082/login', {
+    fetch('http://localhost:8083/login', {
     method: 'POST',
     redirect: 'follow',
     headers: {
@@ -42,9 +42,10 @@ class Login extends Component {
                   password: this.state.password
           })
       }).then(response => {
+        console.log(response);
         this.setState({pom: response.url.substr(22)})
-              alert(response.url);
               if(response.status === 200) {
+                localStorage.username=this.state.username;
                   this.setState({ redirect: true })
                 }
               else if(response.status === 401)
@@ -60,6 +61,7 @@ class Login extends Component {
     const { redirect } = this.state;
     const { pom } = this.state;
 
+    
      if (redirect) {
        if(pom==='admin'){
        return <Redirect to='/admin' />;}
@@ -84,30 +86,28 @@ class Login extends Component {
           </nav>
           <hr />
           <h2>Login</h2>
-          <form onSubmit={this.handleSubmit}>
         <br></br>
         <br></br>
 
 
-      <div class="main">
-         <div class="col-md-6 col-sm-12">
-            <div class="login-form">
-               <form>
-                  <div class="form-group">
+      <div className="main">
+         <div className="col-md-6 col-sm-12">
+            <div className="login-form">
+            <form onSubmit={this.handleSubmit}>
+                  <div className="form-group">
                      <label>Username</label>
-                     <input type="text" name="username" class="form-control" placeholder="Username" value={this.state.username} onChange={this.handleChangeUsername}/>
+                     <input type="text" name="username" className="form-control" placeholder="Username" value={this.state.username} onChange={this.handleChangeUsername} required/>
                   </div>
-                  <div class="form-group">
+                  <div className="form-group">
                      <label>Password</label>
-                     <input type="password" name="password" class="form-control" placeholder="Password" value={this.state.password} onChange={this.handleChangePassword}/>
+                     <input type="password" name="password" className="form-control" placeholder="Password" value={this.state.password} onChange={this.handleChangePassword} required/>
                   </div>
-                  <button type="submit" class="btn btn-primary">Login</button>
+                  <button type="submit" className="btn btn-primary">Login</button>
                </form>
             </div>
          </div>
       </div>
 
-          </form>
         </div>
     );
   }
