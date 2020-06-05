@@ -44,6 +44,7 @@ public class MicroserviceApplication /**/implements CommandLineRunner/**/ {
 	/**/
 	@Override
 	public void run(String... args) {
+		/*
 		// Create a couple of Film, Actor and FilmActor
 		Album albumA = new Album("Miljacka", "Halidov novi album", new Date(95, 3, 11, 0, 0));
 		Album albumB = new Album("OD ljubavi jace", "Album od Nedeljka novi 2020", new Date(95, 1, 10, 0, 0));
@@ -67,7 +68,7 @@ public class MicroserviceApplication /**/implements CommandLineRunner/**/ {
 
 		songRepository.save(new Song("Sankeru", "neki opis", 5.0, 123, new Review(), bp1, bg1));
 		songRepository.save(new Song("Snovi od stakla", "neki opis pjesme", 4.8, 136 ,new Review(), bp2, bg1));
-
+*/
 	}
 	/**/
 

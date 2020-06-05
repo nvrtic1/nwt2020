@@ -25,6 +25,8 @@ import net.springboot.user_micro_service.model.User;
 import net.springboot.user_micro_service.repository.UserRepository;
 import net.springboot.user_micro_service.service.UserService;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 @Controller
 @RequiredArgsConstructor
 public class MainController {
@@ -159,6 +161,33 @@ public class MainController {
         final User updatedUser = userRepository.save(existing);
         return ResponseEntity.ok(updatedUser);
     }
+
+    /**
+     * Update user with provided user id and return updated user
+     * @param id - Long RequestParam id of the user who is being updated
+     * @param user - User with desired attributes
+     * @return ResponseEntity with OK status and updates user
+     */
+    @ResponseBody
+    @PutMapping("/updatePass")
+    public ResponseEntity<User> updateUserPass(@RequestParam (name="email") String email,@RequestParam (name="spassword") String spassword,@RequestParam (name="npassword") String npassword) {
+
+        User existing = userService.findByEmail(email);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        if(passwordEncoder.matches(spassword, existing.getPassword()) == false)
+        {
+            return new ResponseEntity<User>(existing,HttpStatus.NOT_FOUND);
+        }
+        else
+        {
+            existing.setPassword(passwordEncoder.encode(npassword));
+
+            final User updatedUser = userRepository.save(existing);
+            return ResponseEntity.ok(updatedUser);
+        }
+
+    }
     
    
     /**
@@ -198,6 +227,23 @@ public class MainController {
         if(user==null)
         	return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         return new ResponseEntity<User>(user,HttpStatus.OK);
+    }
+
+    /**
+     * Get single user details for provided user id
+     * @param id - Long RequestParam id of user which details we are looking for
+     * @return ResponseEntity - if user is found return that user and status OK, if user is not found return status NOT FOUND and message
+     */
+    @ResponseBody
+    @GetMapping("/users/user2")
+    public ResponseEntity<?> getUserDetails2(@RequestParam (name="email") String email, @RequestParam (name="pass") String pass) {
+        User user = userService.findByEmail(email);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        System.out.println(encoder.matches(pass, user.getPassword()));
+        if(user==null || encoder.matches(pass, user.getPassword()) == false)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        return new ResponseEntity<User>(user,HttpStatus.OK);
+
     }
     
     /**

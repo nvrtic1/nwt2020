@@ -80,6 +80,8 @@ class Admin extends Component {
           <hr />
 
           <h2>Admin page</h2>
+        <br></br>
+          <p>Dobro došli {localStorage.username}</p>
           
         </div>
     );

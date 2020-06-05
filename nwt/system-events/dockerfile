@@ -1,0 +1,6 @@
+FROM openjdk:11-jdk-slim
+
+COPY ./target/system-events-0.0.1-SNAPSHOT /usr/src/system-events/
+WORKDIR /usr/src/system-events
+EXPOSE 8085
+CMD ["java", "-jar", "system-events-0.0.1-SNAPSHOT"]

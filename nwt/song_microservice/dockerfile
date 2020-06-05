@@ -1,0 +1,6 @@
+FROM openjdk:11-jdk-slim
+
+COPY ./target/microservice-0.0.1-SNAPSHOT.jar /usr/src/microservice/
+WORKDIR /usr/src/microservice
+EXPOSE 8082
+CMD ["java", "-jar", "microservice-0.0.1-SNAPSHOT.jar"]

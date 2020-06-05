@@ -6,32 +6,26 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name="user")
+@Table(name="userSong")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User {
-    @Id
-    private Long id;
+public class UserSong {
 
-    @NotEmpty
-    private String firstName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @NotEmpty
     private String email;
 
-    public Long getId() {
+    @NotEmpty
+    private String songName;
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public String getEmail() {
@@ -40,5 +34,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSong() {
+        return songName;
+    }
+
+    public void setSong(String song) {
+        this.songName = song;
     }
 }

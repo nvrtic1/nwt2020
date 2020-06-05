@@ -72,13 +72,17 @@ class User extends Component {
                     <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <ul className="navbar-nav mr-auto">
           <li><a href='/user' className="nav-link"> Home </a></li>
+          <li><a href='/songs' className="nav-link"> Songs </a></li>
+          <li><a href='/buySong' className="nav-link"> BuySong </a></li>
+          <li><a href='/changePassword' className="nav-link"> Change password </a></li>
           <li><a href='/signOut' className="nav-link">Sign Out</a></li>
           </ul>
           </nav>
           <hr />
 
           <h2>User page</h2>
-          
+          <br></br>
+          <p>Dobro došli {localStorage.username}</p>
         </div>
     );
   }

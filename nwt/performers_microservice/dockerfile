@@ -1,0 +1,6 @@
+FROM openjdk:11-jdk-slim
+
+COPY ./target/Performers-0.0.1-SNAPSHOT.jar /usr/src/Performers/
+WORKDIR /usr/src/Performers
+EXPOSE 8081
+CMD ["java", "-jar", "Performers-0.0.1-SNAPSHOT.jar"]

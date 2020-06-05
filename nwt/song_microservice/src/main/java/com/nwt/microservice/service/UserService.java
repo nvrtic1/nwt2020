@@ -19,6 +19,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+
+    private UserSongService userSongService;
+
     @RabbitListener(queues = "#{userCreatedQueue.name}")
     public void getCreateUserMessage(String userCreatedMessage) {
         logger.info("++++++++++++++++++++++++++1 {}", userCreatedMessage);
@@ -47,6 +50,7 @@ public class UserService {
         }
         System.out.println(user.toString());
         userRepository.delete(user);
+        
         logger.debug("User {} deleted from DB", user.toString());
     }
 

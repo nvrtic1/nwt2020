@@ -1,0 +1,128 @@
+version: '3'
+
+services:
+
+  eurekaserver:
+    build: ./eureka-server
+    image: eurekaserver:latest
+    ports:
+      - "8761:8761"
+    networks:
+      - appnetwork
+  
+  gateway:
+   build: ./ZuulService
+   image: gateway:latest
+   depends_on:
+     - eurekaserver
+   ports:
+     - "8084:8084"
+   environment:
+     - SPRING_APPLICATION_NAME =APIGateway
+     - SPRING_PROFILES_ACTIVE=enableEureka
+     - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+     - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:8761/eureka
+   networks:
+     - appnetwork
+     
+     
+  microservice:
+    build: ./song_microservice
+    image: microservice:latest
+    depends_on:
+      - mysql-microservice
+      - eurekaserver
+      - rabbitmq
+      
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_DATASOURCE_URL= jdbc:mysql://mysql-microservice:3306/bazaSong
+      - SPRING_APPLICATION_NAME=song_microservice
+      - SPRING_PROFILES_ACTIVE=enableEureka
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:8761/eureka
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    networks:
+      - appnetwork
+  
+  mysql-microservice:
+    image: mysql:5.6
+    container_name: mysql-microservice
+    networks:
+      - appnetwork
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=bazaSong
+  
+  user-microservice:
+    build: ./user-microservice
+    image: user-microservice:latest
+    depends_on:
+      - mysql-user-microservice
+      - eurekaserver
+      - rabbitmq
+   
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_DATASOURCE_URL= jdbc:mysql://mysql-user-microservice:3306/users_database
+      - SPRING_APPLICATION_NAME=user_microservice
+      - SPRING_PROFILES_ACTIVE=enableEureka
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:8761/eureka
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    networks:
+      - appnetwork
+      
+      
+  singer_microservice:
+    build: ./performers_microservice
+    image: singer_microservice:latest
+    depends_on:
+      - mysql-performers_microservice
+      - eurekaserver
+   
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATASOURCE_URL= jdbc:mysql://mysql-ticket-microservice:3306/baza2
+      - SPRING_APPLICATION_NAME=singer_microservice
+      - SPRING_PROFILES_ACTIVE=enableEureka
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:8761/eureka
+    networks:
+      - appnetwork
+
+  mysql-performers-microservice:
+    image: mysql:5.6
+    container_name: mysql-performers_microservice
+    networks:
+      - appnetwork
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=baza2
+  
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5672:5672"
+    networks:
+      - appnetwork
+
+  mysql-user-microservice:
+    image: mysql:5.6
+    container_name: mysql-user-microservice
+    networks:
+      - appnetwork
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=users_database
+      
+networks:
+  appnetwork:
+    driver: bridge

@@ -6,11 +6,17 @@ import Users from './components/Users';
 
 import SignOut from './components/SignOut';
 
+import Songs from './components/Songs';
+import buySong from './components/buySong';
+
+
 import Login from './components/Login';
 import Registration from './components/Registration';
 import Home from './components/Home';
 import Admin from './components/Admin';
 import User from './components/User';
+
+import changePassword from './components/changePassword';
 
 
 
@@ -27,6 +33,10 @@ class App extends Component {
               <Route path='/users' component={Users} />
               <Route path='/signOut' component={SignOut} />
 
+              <Route path='/changePassword' component={changePassword} />
+
+              <Route path='/songs' component={Songs} />
+              <Route path='/buySong' component={buySong} />
 
 
               <Route path='/login' component={Login} />
